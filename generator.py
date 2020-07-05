@@ -39,6 +39,14 @@ Choose mode: ''')
                                     chosen_chords.append(temp_chord)
                                 else:
                                     print('sorry... I do not know such chords yet. Maybe something more simple?')
+                        temp_chord = chosen_chords[0]
+                        chosen_chords.append(temp_chord)
+                        chosen_chords_copy = chosen_chords.copy()
+                        for chord_x in chosen_chords:
+                            first_chord = chosen_chords_copy[0]
+                            second_chord = chosen_chords_copy[1]
+                            
+                            chosen_chords_copy.remove(chord_x)
                     else:
                         print('sorry... I do not know such chords yet. Maybe something more simple?')
             else:
