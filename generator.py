@@ -1,3 +1,8 @@
+major = [2, 2, 1, 2, 2, 2, 1]
+natural_minor = [2, 1, 2, 2, 1, 2, 2]
+harmonic_minor = [2, 1, 2, 2, 1, 3, 1]
+pentatonic_major = [2, 2, 3, 2, 3]
+pentatonic_minor = [3, 2, 2, 3, 2]
 known_chord_types = ['m', 'sus2', 'major']
 while True:
     mode = input('''0 - add good chord progressions you like
@@ -45,7 +50,7 @@ Choose mode: ''')
                         for chord_x in chosen_chords:
                             first_chord = chosen_chords_copy[0]
                             second_chord = chosen_chords_copy[1]
-                            
+
                             chosen_chords_copy.remove(chord_x)
                     else:
                         print('sorry... I do not know such chords yet. Maybe something more simple?')
