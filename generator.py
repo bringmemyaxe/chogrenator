@@ -14,24 +14,47 @@ chord_type_sus2 = ['R', '2', '5']
 chord_type_major = ['R', '3', '5']
 actual_chord_types = [chord_type_m, chord_type_sus2]
 def special_selection():
+    extended_tonics_copy = extended_tonics.copy()
     rejected = False
     for xx in assimilated_notes:
         if xx not in current_scale:
             rejected = True
             break
     if not rejected:
-        print('this scale is awesome for these notes. I am talking about', current_scale, 'that is', tonic, scale)
-        for xxx in range(scale_index, ):
-            if xxx == tonics[first_tonic]:
-                interval_index = 
-        note_type_index = scale_index +
-        interval_to_scale_tonic = note_types[note_type_index]
-        name_of_the_current_chord = interval_to_scale_tonic + ' ' + first_chord_type
-        special_selection_path = 'Special Selection/' + name_of_the_current_chord + '.CHORD'
-        with open(special_selection_path, 'a', encoding='UTF-8') as save_to_file:
-            save_to_file.write(name_of_the_next_chord + '\n')
+        for xxx in extended_tonics:
+            if xxx != tonic:
+                extended_tonics_copy.remove(xxx)
+            else:
+                break
+        if scale == major:
+            normal_scale_name= 'Major'
+        elif scale == natural_minor:
+            normal_scale_name = 'Natural Minor'
+        elif scale == harmonic_minor:
+            normal_scale_name = 'Harmonic Minor'
+        elif scale == pentatonic_major:
+            normal_scale_name = 'Pentatonic Major'
+        elif scale == pentatonic_minor:
+            normal_scale_name = 'Pentatonic Minor'
+        first_note_type_index = extended_tonics_copy.index(first_chord_notes[0])
+        first_interval_to_scale_tonic = note_types[first_note_type_index]
+        name_of_the_current_chord = first_interval_to_scale_tonic + ' ' + first_chord_type
+        special_selection_path = 'Special Selection/' + normal_scale_name + '/' + name_of_the_current_chord + '.CHORD'
+        second_note_type_index = extended_tonics_copy.index(second_chord_notes[0])
+        second_interval_to_scale_tonic = note_types[second_note_type_index]
+        name_of_the_next_chord = second_interval_to_scale_tonic + ' ' + second_chord_type
+        existing_contents = []
+        try:
+            with open(special_selection_path, encoding='UTF-8') as opener:
+                existing_contents = opener.read().splitlines()
+        except FileNotFoundError:
+            pass
+        if name_of_the_next_chord not in existing_contents:
+            with open(special_selection_path, 'a', encoding='UTF-8') as save_to_file:
+                save_to_file.write(name_of_the_next_chord + '\n')
 while True:
     mode = input('''0 - add good chord progressions you like
+1 - try generating some progressions...
 Choose mode: ''')
     if mode == '0':
         waiting_for_an_acceptable_chord = True
@@ -91,6 +114,7 @@ Choose mode: ''')
                                         first_chord_notes = []
                                         if first_chord[0] == first_chord:
                                             first_tonic = tonics.index(first_chord)
+                                            first_chord_type = 'major'
                                             for another_step in chord_type_major:
                                                 first_index = note_types.index(another_step)
                                                 current_note = first_tonic + first_index
@@ -114,6 +138,7 @@ Choose mode: ''')
                                         second_chord_notes = []
                                         if second_chord[0] == second_chord:
                                             second_tonic = tonics.index(second_chord)
+                                            second_chord_type = 'major'
                                             for another_step in chord_type_major:
                                                 second_index = note_types.index(another_step)
                                                 current_note = second_tonic + second_index
@@ -142,3 +167,4 @@ Choose mode: ''')
                         print('sorry... I do not know such chords yet. Maybe something more simple?')
             else:
                 print('sorry... I do not know such chords yet. Maybe something more simple?')
+    if mode == '1':
