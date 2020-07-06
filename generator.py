@@ -168,3 +168,64 @@ Choose mode: ''')
             else:
                 print('sorry... I do not know such chords yet. Maybe something more simple?')
     if mode == '1':
+        scale_order = ['Major', 'Natural Minor', 'Harmonic Minor', 'Pentatonic Major', 'Pentatonic Minor']
+        type_order = ['major', 'm', 'sus2']
+        chord_orders = []
+        for aa_type in type_order:
+            for aa_note in note_types:
+                for_chord_order = aa_note + ' ' + aa_type
+                chord_orders.append(for_chord_order)
+        for a_scale in scale_order:
+            for a_tonic in tonics:
+                temp_scale_name = a_tonic + ' ' + a_scale
+                for a_note in note_types:
+                    for a_type in type_order:
+                        try:
+                            path = 'Special Selection/' + a_scale + '/' + a_note + ' ' + a_type + '.CHORD'
+                            with open(path, encoding='UTF-8') as checker:
+                                contents = checker.read().splitlines()
+                            current_chain = []
+                            first_chord_in_chain = a_note + ' ' + a_type
+                            current_chain.append(first_chord_in_chain)
+                            for aaa_chord in chord_orders:
+                                if aaa_chord in contents:
+                                    try:
+                                        path = 'Special Selection/' + a_scale + '/' + aaa_chord + '.CHORD'
+                                        with open(path, encoding='UTF-8') as checker:
+                                            contents_2 = checker.read().splitlines()
+                                        current_chain.append(aaa_chord)
+                                        for aaaa_chord in chord_orders:
+                                            if aaaa_chord in contents_2:
+                                                try:
+                                                    path = 'Special Selection/' + a_scale + '/' + aaaa_chord + '.CHORD'
+                                                    with open(path, encoding='UTF-8') as checker:
+                                                        contents_3 = checker.read().splitlines()
+                                                    current_chain.append(aaaa_chord)
+                                                    for aaaaa_chord in chord_orders:
+                                                        if aaaaa_chord in contents_3:
+                                                            try:
+                                                                path = 'Special Selection/' + a_scale + '/' + aaaaa_chord + '.CHORD'
+                                                                with open(path, encoding='UTF-8') as checker:
+                                                                    contents_4 = checker.read().splitlines()
+                                                                current_chain.append(aaaaa_chord)
+                                                                for aaaaaa_chord in chord_orders:
+                                                                    if aaaaaa_chord in contents_4:
+                                                                        if aaaaaa_chord == first_chord_in_chain:
+                                                                            forbidden = False
+                                                                            for xxxxx in current_chain:
+                                                                                repeats = current_chain.count(xxxxx)
+                                                                                if repeats > 1:
+                                                                                    forbidden = True
+                                                                            if not forbidden:
+                                                                                print('It is in', temp_scale_name, current_chain)
+                                                                del current_chain[len(current_chain)-1]
+                                                            except FileNotFoundError:
+                                                                pass
+                                                    del current_chain[len(current_chain) - 1]
+                                                except FileNotFoundError:
+                                                    pass
+                                        del current_chain[len(current_chain) - 1]
+                                    except FileNotFoundError:
+                                        pass
+                        except FileNotFoundError:
+                            pass
