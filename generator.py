@@ -13,6 +13,14 @@ chord_type_m = ['R', '3m', '5']
 chord_type_sus2 = ['R', '2', '5']
 chord_type_major = ['R', '3', '5']
 actual_chord_types = [chord_type_m, chord_type_sus2]
+def special_selection():
+    rejected = False
+    for xx in assimilated_notes:
+        if xx not in current_scale:
+            rejected = True
+            break
+    if not rejected:
+        print('this scale is awesome for these notes. I am talking about', current_scale, 'that is', tonic, scale)
 while True:
     mode = input('''0 - add good chord progressions you like
 Choose mode: ''')
@@ -60,9 +68,10 @@ Choose mode: ''')
                             except IndexError:
                                 second_chord = ''
                             if second_chord != '':
-                                print('analyzing', first_chord, 'to', second_chord)
                                 for scale in scales:
                                     for tonic in tonics:
+                                        assimilated_notes = []
+                                        two_current_chords_assimilated = False
                                         scale_index = tonics.index(tonic)
                                         current_scale = []
                                         current_scale.append(tonic)
@@ -76,13 +85,48 @@ Choose mode: ''')
                                                 first_index = note_types.index(another_step)
                                                 current_note = first_tonic + first_index
                                                 first_chord_notes.append(extended_tonics[current_note])
-                                                print(first_chord_notes)
+                                            if not two_current_chords_assimilated:
+                                                for x in first_chord_notes:
+                                                    assimilated_notes.append(x)
                                         else:
                                             first_tonic = tonics.index(first_chord[0])
-                                            print(tonics[first_tonic])
-                                            first_chord_type = temp_chord.replace(temp_chord[0], '')
-                                            for chord_type in actual_chord_types:
-                                                if first_chord_type == 
+                                            first_chord_type = first_chord.replace(tonics[first_tonic], '')
+                                            for chord_type in known_chord_types:
+                                                if first_chord_type == chord_type:
+                                                    chord_type_index = known_chord_types.index(chord_type)
+                                                    for another_step in actual_chord_types[chord_type_index]:
+                                                        first_index = note_types.index(another_step)
+                                                        current_note = first_tonic + first_index
+                                                        first_chord_notes.append(extended_tonics[current_note])
+                                                    if not two_current_chords_assimilated:
+                                                        for x in first_chord_notes:
+                                                            assimilated_notes.append(x)
+                                        second_chord_notes = []
+                                        if second_chord[0] == second_chord:
+                                            second_tonic = tonics.index(second_chord)
+                                            for another_step in chord_type_major:
+                                                second_index = note_types.index(another_step)
+                                                current_note = second_tonic + second_index
+                                                second_chord_notes.append(extended_tonics[current_note])
+                                            if not two_current_chords_assimilated:
+                                                for x in second_chord_notes:
+                                                    assimilated_notes.append(x)
+                                                two_current_chords_assimilated = True
+                                        else:
+                                            second_tonic = tonics.index(second_chord[0])
+                                            second_chord_type = second_chord.replace(tonics[second_tonic], '')
+                                            for chord_type in known_chord_types:
+                                                if second_chord_type == chord_type:
+                                                    chord_type_index = known_chord_types.index(chord_type)
+                                                    for another_step in actual_chord_types[chord_type_index]:
+                                                        second_index = note_types.index(another_step)
+                                                        current_note = second_tonic + second_index
+                                                        second_chord_notes.append(extended_tonics[current_note])
+                                                    if not two_current_chords_assimilated:
+                                                        for x in second_chord_notes:
+                                                            assimilated_notes.append(x)
+                                                        two_current_chords_assimilated = True
+                                        special_selection()
                             chosen_chords_copy.remove(chord_x)
                     else:
                         print('sorry... I do not know such chords yet. Maybe something more simple?')
