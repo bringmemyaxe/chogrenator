@@ -1,6 +1,6 @@
 tonics = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 extended_tonics = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#',
-                   'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G',]
+                   'A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G']
 note_types = ['R', 'b2', '2', '3m', '3', '4', 'b5', '5', '#5', '6', '7', '7M']
 major = [2, 2, 1, 2, 2, 2]
 natural_minor = [2, 1, 2, 2, 1, 2]
@@ -21,6 +21,15 @@ def special_selection():
             break
     if not rejected:
         print('this scale is awesome for these notes. I am talking about', current_scale, 'that is', tonic, scale)
+        for xxx in range(scale_index, ):
+            if xxx == tonics[first_tonic]:
+                interval_index = 
+        note_type_index = scale_index +
+        interval_to_scale_tonic = note_types[note_type_index]
+        name_of_the_current_chord = interval_to_scale_tonic + ' ' + first_chord_type
+        special_selection_path = 'Special Selection/' + name_of_the_current_chord + '.CHORD'
+        with open(special_selection_path, 'a', encoding='UTF-8') as save_to_file:
+            save_to_file.write(name_of_the_next_chord + '\n')
 while True:
     mode = input('''0 - add good chord progressions you like
 Choose mode: ''')
@@ -28,6 +37,7 @@ Choose mode: ''')
         waiting_for_an_acceptable_chord = True
         chosen_chords = []
         while waiting_for_an_acceptable_chord:
+            print('do not use flats, use sharps!')
             temp_chord = input('add the first chord of your progression: ')
             chord_type = temp_chord.replace(temp_chord[0], '')
             if temp_chord[0] == temp_chord:
